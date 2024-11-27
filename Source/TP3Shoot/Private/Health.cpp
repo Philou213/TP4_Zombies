@@ -17,12 +17,13 @@ UHealth::UHealth()
 void UHealth::AddHealth(float AddHealth)
 {
 	CurrentHealth += AddHealth;
+	UE_LOG(LogTemp, Warning, TEXT("Current Health: %f"), CurrentHealth);
 	
 	if (CurrentHealth > MaxHealth)
 	{
 		CurrentHealth = MaxHealth;
 		//Stop regeneration
-		GetWorld()->GetTimerManager().ClearTimer(HealthRegenerationRateTimer);
+		if (IsHealthRegenerating) GetWorld()->GetTimerManager().ClearTimer(HealthRegenerationRateTimer);
 	}
 	if (CurrentHealth <= 0)
 	{
@@ -30,7 +31,7 @@ void UHealth::AddHealth(float AddHealth)
 		OnDead.Broadcast();
 	}
 	OnHealthValueChanged.Broadcast(CurrentHealth);
-	if (AddHealth < 0) StartHealthRegenerationCooldown();
+	if (IsHealthRegenerating && AddHealth < 0) StartHealthRegenerationCooldown();
 }
 
 //Wait a certain time before starting regenerate

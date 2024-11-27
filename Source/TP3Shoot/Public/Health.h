@@ -28,11 +28,16 @@ public:
 	UPROPERTY(EditAnywhere, Category="HealthRegeneration")
 	float HealthRegenerationRateCooldown;
 
+	UPROPERTY(EditAnywhere, Category = "HealthRegeneration")
+	bool IsHealthRegenerating = false;
+
 	UPROPERTY(BlueprintAssignable, Category = "Events")
 	FOnHealthValueChanged OnHealthValueChanged;
 
 	UPROPERTY(BlueprintAssignable, Category = "Events")
 	FOnDead OnDead;
+
+
 
 	void AddHealth(float Health);
 	void StartHealthRegenerationCooldown();

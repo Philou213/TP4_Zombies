@@ -7,6 +7,7 @@
 #include "Health.h"
 #include "ProjectileBeam.h"
 #include "Team.h"
+#include "Zombie.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -170,11 +171,12 @@ void ATP3ShootCharacter::Fire()
 		FVector ImpactPoint = HitResult.ImpactPoint;
 		
 		// If the trace hit something, log the hit information
-		//UE_LOG(LogType, Warning, TEXT("Hit Actor: %s"), *HitActor->GetName());
+		UE_LOG(LogType, Warning, TEXT("Hit Actor: %s"), *HitActor->GetName());
 		//UE_LOG(LogType, Warning, TEXT("Hit Location: %s"), *ImpactPoint.ToString());
-		
-		CheckIfFiringApplyForce(HitActor, Start, ImpactPoint);
-		CheckIfCharacter(HitActor);
+
+		CheckIfZombie(HitActor);
+		//CheckIfFiringApplyForce(HitActor, Start, ImpactPoint);
+		//CheckIfCharacter(HitActor);
 
 		// Optionally, you can trigger some effects, like spawning particles at the hit location
 		FireParticle(SK_Gun->GetSocketLocation("MuzzleFlash"), ImpactPoint); // Or spawn effects based on the hit
@@ -221,6 +223,7 @@ void ATP3ShootCharacter::FireStraight()
 		FVector ImpactPoint = HitResult.ImpactPoint;
 
 		// Check if the hit actor is valid and apply force or other logic
+		//CheckIfZombie(HitActor);
 		CheckIfFiringApplyForce(HitActor, Start, ImpactPoint);
 		CheckIfCharacter(HitActor);
 
@@ -313,6 +316,14 @@ void ATP3ShootCharacter::CheckIfCharacter(const AActor* HitActor)
 				}
 			}
 		}
+	}
+}
+
+void ATP3ShootCharacter::CheckIfZombie(const AActor* HitActor)
+{
+	if (const AZombie* Zombie = Cast<AZombie>(HitActor))
+	{
+		Zombie->NotifyHitByRaycast(FiringDamage);
 	}
 }
 

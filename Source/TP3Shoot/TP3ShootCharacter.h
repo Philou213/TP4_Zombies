@@ -151,6 +151,7 @@ private:
 	FTimerHandle FireTimer;
 	void CheckIfFiringApplyForce(const AActor* otherActor, const FVector firingLocation, const FVector hitLocation);
 	void CheckIfCharacter(const AActor* HitActor);
+	void CheckIfZombie(const AActor* HitActor);
 	void NotifyHitByRaycast(float firingDamage) const;
 	AProjectilePool* BeamPool;
 };
