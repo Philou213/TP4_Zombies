@@ -5,29 +5,18 @@
 	"Description": "",
 	"Modules": [
 		{
-			"Name": "TP3Shoot",
+			"Name": "MassAITesting",
 			"Type": "Runtime",
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [
-				"AIModule",
+				"MassSpawner",
 				"Engine"
 			]
 		}
 	],
 	"Plugins": [
 		{
-			"Name": "ModelingToolsEditorMode",
-			"Enabled": true,
-			"TargetAllowList": [
-				"Editor"
-			]
-		},
-		{
-			"Name": "MassAI",
-			"Enabled": true
-		},
-		{
-			"Name": "MassCrowd",
+			"Name": "AnimToTexture",
 			"Enabled": true
 		},
 		{
@@ -35,7 +24,27 @@
 			"Enabled": true
 		},
 		{
+			"Name": "MassCrowd",
+			"Enabled": true
+		},
+		{
+			"Name": "MassAI",
+			"Enabled": true
+		},
+		{
 			"Name": "MassGameplay",
+			"Enabled": true
+		},
+		{
+			"Name": "MassWanderAI",
+			"Enabled": true
+		},
+		{
+			"Name": "BuildingManager",
+			"Enabled": true
+		},
+		{
+			"Name": "GameplayStateTree",
 			"Enabled": true
 		}
 	]
