@@ -4,6 +4,7 @@
 #include "Health.h"
 #include "ProjectileBeam.h"
 #include "ProjectilePool.h"
+#include "Zombie.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
@@ -18,6 +19,8 @@
 
 AZombiePlayer::AZombiePlayer()
 {
+	PrimaryActorTick.bCanEverTick = false;
+	
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 
@@ -264,11 +267,10 @@ void AZombiePlayer::BeginPlay()
 
 void AZombiePlayer::CheckIfZombie(const AActor* HitActor)
 {
-	//TODO : Add zombie class
-	/*if (const AZombie* Zombie = Cast<AZombie>(HitActor))
+	if (const AZombie* Zombie = Cast<AZombie>(HitActor))
 	{
 		Zombie->NotifyHitByRaycast(FiringDamage);
-	}*/
+	}
 }
 
 void AZombiePlayer::NotifyHitByRaycast(float firingDamage) const
