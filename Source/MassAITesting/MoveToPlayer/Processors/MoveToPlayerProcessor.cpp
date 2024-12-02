@@ -7,6 +7,8 @@
 #include "MassCommonTypes.h"
 #include "MassExecutionContext.h"
 #include "MassNavigationFragments.h"
+#include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "MassAITesting/MoveToPlayer/Tags/MoveToPlayerTag.h"
 
@@ -33,7 +35,11 @@ void UMoveToPlayerProcessor::ConfigureQueries()
 void UMoveToPlayerProcessor::Execute(FMassEntityManager& EntityManager, FMassExecutionContext& Context)
 {
 	FVector PlayerLocation = UGameplayStatics::GetPlayerPawn(Context.GetWorld(), 0)->GetActorLocation();
-	PlayerLocation.Z = 220;
+	ACharacter* PlayerCharacter = Cast<ACharacter>(UGameplayStatics::GetPlayerPawn(Context.GetWorld(), 0));
+	if (PlayerCharacter->GetCharacterMovement()->IsFalling())
+	{
+		PlayerLocation.Z = 250;
+	}
 
 	MassEntityQuery.ForEachEntityChunk(EntityManager, Context, [&, PlayerLocation](FMassExecutionContext& MassExecutionContext)
 	{
