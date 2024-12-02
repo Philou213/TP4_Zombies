@@ -64,6 +64,8 @@ void FCalculatePathTask::StateCompleted(FStateTreeExecutionContext& Context, con
 	FInstanceDataType& InstanceData = Context.GetInstanceData(*this);
 	InstanceData.bFoundPath = false;
 	InstanceData.QueryID = -1;
+
+	UE_LOG(LogTemp, Warning, TEXT("Path Found: %d"), InstanceData.OutputPath.Num());
 	
 	FMassStateTreeTaskBase::StateCompleted(Context, CompletionStatus, CompletedActiveStates);
 }

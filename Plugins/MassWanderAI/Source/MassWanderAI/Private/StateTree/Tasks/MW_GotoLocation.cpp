@@ -3,12 +3,14 @@
 
 #include "StateTree/Tasks/MW_GotoLocation.h"
 
+#include "AITestsCommon.h"
 #include "MassCommonFragments.h"
 #include "MassNavigationFragments.h"
 #include "MassSignalSubsystem.h"
 #include "MassStateTreeExecutionContext.h"
 #include "StateTreeExecutionContext.h"
 #include "StateTreeLinker.h"
+#include "Kismet/GameplayStatics.h"
 
 bool FMW_GotoLocation::Link(FStateTreeLinker& Linker)
 {
@@ -49,6 +51,7 @@ EStateTreeRunStatus FMW_GotoLocation::Tick(FStateTreeExecutionContext& Context, 
 
 	if (MoveTarget.DistanceToGoal <= MoveTarget.SlackRadius)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("Arrive"));
 		MoveTarget.CreateNewAction(MoveTarget.IntentAtGoal, *Context.GetWorld());
 		return EStateTreeRunStatus::Succeeded;
 	}
@@ -59,6 +62,7 @@ EStateTreeRunStatus FMW_GotoLocation::Tick(FStateTreeExecutionContext& Context, 
 void FMW_GotoLocation::ExitState(FStateTreeExecutionContext& Context,
 	const FStateTreeTransitionResult& Transition) const
 {
+	UE_LOG(LogTemp, Warning, TEXT("Exiting GotoLocation"));
 	auto& MoveTarget = Context.GetExternalData(MoveTargetHandle);
 	MoveTarget.CreateNewAction(EMassMovementAction::Stand, *Context.GetWorld());
 }

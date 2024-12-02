@@ -2,7 +2,6 @@
 
 
 #include "StateTree/Tasks/MW_FindRandomLocationTask.h"
-
 #include "MassCommonFragments.h"
 #include "StateTreeExecutionContext.h"
 #include "StateTreeLinker.h"

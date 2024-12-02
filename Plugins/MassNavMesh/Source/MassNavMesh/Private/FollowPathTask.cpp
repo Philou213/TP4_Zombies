@@ -64,6 +64,8 @@ EStateTreeRunStatus FFollowPathTask::Tick(FStateTreeExecutionContext& Context, c
 	auto& MoveTarget = Context.GetExternalData(MoveTargetHandle);
 	const auto& TransformFragment = Context.GetExternalData(TransformHandle);
 
+	UE_LOG(LogTemp, Log, TEXT("MoveTarget.Center: %s"), *MoveTarget.Center.ToString());
+
 	if (FVector::Dist(TransformFragment.GetTransform().GetLocation(), MoveTarget.Center) < 100.f)
 	{
 		MoveToNextPoint(Context, Status);
