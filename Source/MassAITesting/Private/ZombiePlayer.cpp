@@ -10,12 +10,21 @@
 #include "Perception/AISenseConfig_Sight.h"
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "Components/InputComponent.h"
+#include "Components/SphereComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 
+void AZombiePlayer::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor->IsA(AZombie::StaticClass()))
+	{
+		Health->AddHealth(-10);
+	}
+}
 
 AZombiePlayer::AZombiePlayer()
 {
@@ -23,6 +32,10 @@ AZombiePlayer::AZombiePlayer()
 	
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
+
+	Trigger = CreateDefaultSubobject<USphereComponent>(TEXT("Trigger"));
+	Trigger->SetupAttachment(RootComponent);
+	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AZombiePlayer::OnOverlapBegin);
 
 	// set our turn rate for input
 	TurnRateGamepad = 50.f;

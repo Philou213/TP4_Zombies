@@ -21,7 +21,12 @@ class MASSAITESTING_API AZombiePlayer : public ACharacter
 	class UCameraComponent* FollowCamera;
 
 public:
+	UFUNCTION()
+	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	AZombiePlayer();
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Trigger, meta = (AllowPrivateAccess = "true"))
+	class USphereComponent* Trigger;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Health, meta = (AllowPrivateAccess = "true"))
 	class UHealth* Health;

@@ -35,11 +35,7 @@ void UMoveToPlayerProcessor::ConfigureQueries()
 void UMoveToPlayerProcessor::Execute(FMassEntityManager& EntityManager, FMassExecutionContext& Context)
 {
 	FVector PlayerLocation = UGameplayStatics::GetPlayerPawn(Context.GetWorld(), 0)->GetActorLocation();
-	ACharacter* PlayerCharacter = Cast<ACharacter>(UGameplayStatics::GetPlayerPawn(Context.GetWorld(), 0));
-	if (PlayerCharacter->GetCharacterMovement()->IsFalling())
-	{
-		PlayerLocation.Z = 250;
-	}
+	PlayerLocation.Z = 250;
 
 	MassEntityQuery.ForEachEntityChunk(EntityManager, Context, [&, PlayerLocation](FMassExecutionContext& MassExecutionContext)
 	{
