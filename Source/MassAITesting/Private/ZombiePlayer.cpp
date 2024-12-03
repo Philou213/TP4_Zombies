@@ -32,6 +32,8 @@ void AZombiePlayer::Deactivate()
 	SetActorEnableCollision(false);
 	SetActorTickEnabled(false);
 	UnPossessed();
+	FollowCamera->SetActive(false);
+	GetWorld()->GetFirstPlayerController()->SetViewTargetWithBlend(this, 2);
 }
 
 AZombiePlayer::AZombiePlayer()
@@ -75,6 +77,14 @@ AZombiePlayer::AZombiePlayer()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
+
+	DeadCameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("DeadCameraBoom"));
+	DeadCameraBoom->SetupAttachment(RootComponent);
+	DeadCameraBoom->TargetArmLength = 400.0f; // The camera follows at this distance behind the character	
+
+	DeadCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("DeadCamera"));
+	DeadCamera->SetupAttachment(DeadCameraBoom, USpringArmComponent::SocketName);
+	DeadCamera->bUsePawnControlRotation = true;
 
 	// Create SK_Gun
 	SK_Gun = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Gun"));
