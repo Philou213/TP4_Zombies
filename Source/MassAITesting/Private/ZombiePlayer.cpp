@@ -26,6 +26,14 @@ void AZombiePlayer::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AAc
 	}
 }
 
+void AZombiePlayer::Deactivate()
+{
+	SetActorHiddenInGame(true);
+	SetActorEnableCollision(false);
+	SetActorTickEnabled(false);
+	UnPossessed();
+}
+
 AZombiePlayer::AZombiePlayer()
 {
 	PrimaryActorTick.bCanEverTick = false;
@@ -76,6 +84,7 @@ AZombiePlayer::AZombiePlayer()
 
 	//Create health component
 	Health = CreateDefaultSubobject<UHealth>(TEXT("Health"));
+	Health->OnDead.AddDynamic(this, &AZombiePlayer::Deactivate);
 
 	// Create stimulus component
 	StimuliSource = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(TEXT("Stimulus"));

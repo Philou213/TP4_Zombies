@@ -2,7 +2,9 @@
 
 #include "Zombie.h"
 #include "Health.h"
+#include "ZombieGameState.h"
 
+class AGameState;
 // Sets default values
 AZombie::AZombie()
 {
@@ -36,5 +38,10 @@ void AZombie::DeactivateZombie()
 	SetActorHiddenInGame(true);
 	SetActorEnableCollision(false);
 	SetActorTickEnabled(false);
+	AGameStateBase* GameState = GetWorld()->GetGameState();
+	if (AZombieGameState* ZombieGame = Cast<AZombieGameState>(GameState))
+	{
+		ZombieGame->AddKill();
+	}
 }
 
