@@ -29,7 +29,9 @@ public:
 
 	void AddKill();
 
-	void UpdateScore();
+	void UpdateScore() const;
+
+	void StopUpdateScore();
 	
 	UPROPERTY(BlueprintAssignable, Category = "Game Stats")
 	FScoreUpdated OnScoreUpdated;
@@ -39,4 +41,5 @@ private:
 	void StartTimer();
 	void UpdateTimer();
 	FTimerHandle Timer;
+	bool InProgress;
 };

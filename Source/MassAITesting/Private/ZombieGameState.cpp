@@ -7,6 +7,7 @@ AZombieGameState::AZombieGameState()
 {
 	GameElapsedTime = 0;
 	TotalZombieKills = 0;
+	InProgress = true;
 	PrimaryActorTick.bCanEverTick = false;
 }
 
@@ -16,10 +17,19 @@ void AZombieGameState::AddKill()
 	UpdateScore();
 }
 
-void AZombieGameState::UpdateScore()
+void AZombieGameState::UpdateScore() const
 {
-	int Score = GameElapsedTime * 10 + TotalZombieKills * 10;
-	OnScoreUpdated.Broadcast(Score);
+	if (InProgress)
+	{
+		int Score = GameElapsedTime * 10 + TotalZombieKills * 10;
+		OnScoreUpdated.Broadcast(Score);
+	}
+}
+
+void AZombieGameState::StopUpdateScore()
+{
+	InProgress = false;
+	GetWorldTimerManager().ClearTimer(Timer);
 }
 
 void AZombieGameState::BeginPlay()

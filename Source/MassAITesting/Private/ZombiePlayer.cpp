@@ -5,6 +5,7 @@
 #include "ProjectileBeam.h"
 #include "ProjectilePool.h"
 #include "Zombie.h"
+#include "ZombieGameState.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
@@ -34,6 +35,11 @@ void AZombiePlayer::Deactivate()
 	UnPossessed();
 	FollowCamera->SetActive(false);
 	GetWorld()->GetFirstPlayerController()->SetViewTargetWithBlend(this, 2);
+	AGameStateBase* GameState = GetWorld()->GetGameState();
+	if (AZombieGameState* ZombieGame = Cast<AZombieGameState>(GameState))
+	{
+		ZombieGame->StopUpdateScore();
+	}
 }
 
 AZombiePlayer::AZombiePlayer()
